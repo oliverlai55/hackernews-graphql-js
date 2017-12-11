@@ -6,19 +6,26 @@ const bodyParser = require('body-parser');
 // This package will handle GraphQL server requests and responses
 // for you, based on your schema.
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
-
 const schema = require('./schema');
 
-var app = express();
+const connectMongo = require('./mongo-connector');
 
-app.use('/graphql', bodyParser.json(), graphqlExpress({schema}));
+const start = async () => {
 
-app.use('/graphiql', graphiqlExpress({
-  endpointURL: '/graphql',
-}));
+  const mongo = await connectMongo();
+  var app = express();
+  app.use('/graphql', bodyParser.json(), graphqlExpress({
+    context: {mongo},
+    schema
+  }));
+  app.use('/graphiql', graphiqlExpress({
+    endpointURL: '/graphql',
+  }));
 
-const PORT = 3000
+  const PORT = 3000;
+  app.listen(PORT, () => {
+    console.log(`Hackernews GraphQL server running on port ${PORT}.`)
+  });
+};
 
-app.listen(PORT, () => {
-  console.log(`Hackernews Graphql server running on port ${PORT}.`);
-});
+start();
