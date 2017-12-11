@@ -1,10 +1,13 @@
+import mongoose from 'mongoose';
+const ObjectId = mongoose.SchemaType.ObjectId;
+
 module.exports = {
   Query: {
     allLinks: () => async (root, data, {mongo: {Links}}) => {
       return await Links.find({}).toArray();
     },
   },
-  
+
   Mutation: {
     createLink: async (root, data, {mongo: {Links}}) => {
       const response = await Links.insert(data);
