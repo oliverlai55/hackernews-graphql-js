@@ -7,25 +7,26 @@ const bodyParser = require('body-parser');
 // for you, based on your schema.
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const schema = require('./schema');
+import mongoose from 'mongoose';
 
-const connectMongo = require('./mongo-connector');
+// const connectMongo = require('./mongo-connector');
+import Links from './models';
+mongoose.connect('mongodb://localhost/hackernews', {useMongoClient: true});
 
-const start = async () => {
+  const PORT = 3000;
 
-  const mongo = await connectMongo();
   var app = express();
+
   app.use('/graphql', bodyParser.json(), graphqlExpress({
-    context: {mongo},
+    context: { Links },
     schema
   }));
+
   app.use('/graphiql', graphiqlExpress({
     endpointURL: '/graphql',
   }));
 
-  const PORT = 3000;
+
   app.listen(PORT, () => {
     console.log(`Hackernews GraphQL server running on port ${PORT}.`)
   });
-};
-
-start();
