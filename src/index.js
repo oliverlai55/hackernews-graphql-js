@@ -1,15 +1,12 @@
 const express = require('express');
-
 // This package automatically parses JSON requests.
 const bodyParser = require('body-parser');
-
 // This package will handle GraphQL server requests and responses
 // for you, based on your schema.
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const schema = require('./schema');
 import mongoose from 'mongoose';
 
-// const connectMongo = require('./mongo-connector');
 const { Links, Users } = require('./models');
 // import Users from './models';
 
