@@ -12,7 +12,7 @@ module.exports = {
       const newUser = {
         name: args.name,
         email: args.authProvider.email.email,
-        password: args.AuthProvider.email.password,
+        password: args.authProvider.email.password,
       };
       const response = await new Users(newUser).save()
     }
