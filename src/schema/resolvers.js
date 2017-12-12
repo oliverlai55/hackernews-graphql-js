@@ -6,7 +6,16 @@ module.exports = {
     allLinks: async (parent, args, { Links }) => await Links.find(),
   },
   Mutation: {
-    createLink: async (parent, args, { Links }) => await new Links(args).save()
+    createLink: async (parent, args, { Links }) => await new Links(args).save(),
+    createUser: async (parent, args, { Users }) => {
+      console.log(args);
+      const newUser = {
+        name: args.name,
+        email: args.authProvider.email.email,
+        password: args.AuthProvider.email.password,
+      };
+      const response = await new Users(newUser).save()
+    }
   }
 }
 

@@ -10,7 +10,9 @@ const schema = require('./schema');
 import mongoose from 'mongoose';
 
 // const connectMongo = require('./mongo-connector');
-import Links from './models';
+const { Links, Users } = require('./models');
+// import Users from './models';
+
 mongoose.connect('mongodb://localhost/hackernews', {useMongoClient: true});
 
   const PORT = 3000;
@@ -18,7 +20,7 @@ mongoose.connect('mongodb://localhost/hackernews', {useMongoClient: true});
   var app = express();
 
   app.use('/graphql', bodyParser.json(), graphqlExpress({
-    context: { Links },
+    context: { Links, Users },
     schema
   }));
 

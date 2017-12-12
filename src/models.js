@@ -9,6 +9,19 @@ const LinksSchema = new Schema({
   description: {type: 'String', require: true}
 })
 
-const Links = mongoose.model('Links', LinksSchema);
+// I guess this is where I define another collection?
+const UsersSchema = new Schema({
+  name: {type: 'String', require: true},
+  email: {type: 'String', require: true},
+  password: {type: 'String', require: true}
+})
 
-export default Links;
+const Links = mongoose.model('Links', LinksSchema);
+const Users = mongoose.model('Users', UsersSchema);
+
+module.exports = {
+  Links,
+  Users
+}
+// export default Links;
+// export default Users;
